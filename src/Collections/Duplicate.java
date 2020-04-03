@@ -15,6 +15,7 @@ public class Duplicate {
         phoneBook.get("goat");
         phoneBook.get("bat");
         phoneBook.get("owl");
+        phoneBook.get(null);
     }
 
     private static void printUniqueItems(){

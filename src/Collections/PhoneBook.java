@@ -11,11 +11,11 @@ public class PhoneBook {
     }
 
     public void add(String name, String number){
-        if (name.equals("")){
+        if (name == null||name.equals("")){
             System.out.println("Name is empty");
             return;
         }
-        if (number.equals("")){
+        if (number == null||number.equals("")){
             System.out.println("Number is empty");
             return;
         }
@@ -37,7 +37,7 @@ public class PhoneBook {
     }
 
     public void get(String name){
-        if (name.equals("")){
+        if (name == null||name.equals("")){
             System.out.println("Name is empty");
             return;
         }

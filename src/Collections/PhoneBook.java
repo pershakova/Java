@@ -10,19 +10,6 @@ public class PhoneBook {
         this.listMap = getInitialList();
     }
 
-    private  Map<String, List<String>> getInitialList(){
-        Map<String, List<String>> map = new HashMap<>();
-
-        map.put("cat", feelArray("123", "456", "911"));
-        map.put("dog", feelArray("345"));
-        map.put("rat", feelArray("678", "ac5"));
-        map.put("bat", feelArray("300", "790"));
-        map.put("pig", feelArray("123", "765", "987"));
-        map.put("hen", feelArray("908"));
-
-        return  map;
-    }
-
     public void add(String name, String number){
         if (name.equals("")){
             System.out.println("Name is empty");
@@ -65,6 +52,19 @@ public class PhoneBook {
         for (String phone : listMap.get(name)){
             System.out.println(phone);
         }
+    }
+
+    private  Map<String, List<String>> getInitialList(){
+        Map<String, List<String>> map = new HashMap<>();
+
+        map.put("cat", feelArray("123", "456", "911"));
+        map.put("dog", feelArray("345"));
+        map.put("rat", feelArray("678", "ac5"));
+        map.put("bat", feelArray("300", "790"));
+        map.put("pig", feelArray("123", "765", "987"));
+        map.put("hen", feelArray("908"));
+
+        return  map;
     }
 
     private ArrayList<String> feelArray(String...items){

@@ -15,7 +15,7 @@ public class MainMultiThreading {
     private static void methodMain(){
         float[] array = initializeArray(arr);
         long startTime = System.currentTimeMillis();
-        calculateItems(array);
+        calculateItems(array, 0);
         System.out.println(System.currentTimeMillis() - startTime);
     }
 
@@ -24,11 +24,16 @@ public class MainMultiThreading {
         return array;
     }
 
-    private static float[] calculateItems(float[] arr){
+    private static float[] calculateItems(float[] arr, int offset){
         for (int i =0; i< arr.length; i++){
-            arr[i] = (float)(arr[i] * Math.sin(0.2f + i/5) * Math.cos(0.2f + i/5) * Math.cos(0.4f + i/2));
+            float currentValue = arr[i];
+            arr[i] = computeValue(i+offset, currentValue);
         }
         return arr;
+    }
+
+    private static float computeValue(int index, float currentValue){
+        return (float)(currentValue * Math.sin(0.2f + index/5) * Math.cos(0.2f + index/5) * Math.cos(0.4f + index/2));
     }
 
     private static void methodTwoThreads() throws InterruptedException {
@@ -55,7 +60,7 @@ public class MainMultiThreading {
     }
 
     private static void calculateAndGlue(float[] array, int destinationPosition){
-        float[] calculatedArray = calculateItems(array);
+        float[] calculatedArray = calculateItems(array, destinationPosition);
         System.arraycopy(calculatedArray, 0, arr, destinationPosition, HALF);
     }
 }

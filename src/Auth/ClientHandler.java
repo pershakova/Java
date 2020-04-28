@@ -70,13 +70,10 @@ public class ClientHandler {
                 return;
             }
             if (strFromClient.startsWith("/w ")) {
-                String[] parts = strFromClient.split("\\s");
-                if (parts.length<3){
-                    continue;
-                }
-                String nick = parts[1];
-                String message = parts[2];
-                myServer.sendPrivateMessage(this, nick, message);
+                String[] tokens = strFromClient.split("\\s");
+                String nick = tokens[1];
+                String msg = strFromClient.substring(4 + nick.length());
+                myServer.sendPrivateMessage(this, nick, msg);
                 continue;
             }
 

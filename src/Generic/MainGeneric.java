@@ -45,8 +45,8 @@ public class MainGeneric {
         System.out.println("Box2: " + box2.getItems().size());
     }
 
-    public static <T> void swap(T[] array, int index1, int index2) {
-        T tmp = array[index1];
+    public static void swap(Object[] array, int index1, int index2) {
+        Object tmp = array[index1];
         array[index1] = array[index2];
         array[index2] = tmp;
     }

@@ -12,6 +12,7 @@ public class ClientHandler {
     private DataOutputStream out;
 
     private String name;
+    private String login;
 
     public String getName() {
         return name;
@@ -24,6 +25,7 @@ public class ClientHandler {
             this.in = new DataInputStream(socket.getInputStream());
             this.out = new DataOutputStream(socket.getOutputStream());
             this.name = "";
+            this.login = "";
             new Thread(() -> {
                 try {
                     authentication();
@@ -44,16 +46,19 @@ public class ClientHandler {
             String str = in.readUTF();
             if (str.startsWith("/auth")) {
                 String[] parts = str.split("\\s");
-                String nick = myServer.getAuthService().getNickByLoginPass(parts[1], parts[2]);
+                String nick = DataBase.getNickByLoginAndPass(parts[1], parts[2]);
+                login = parts[1];
                 if (nick != null) {
                     if (!myServer.isNickBusy(nick)) {
                         sendMsg("/authok " + nick);
                         name = nick;
                         myServer.broadcastMsg(name + " зашел в чат");
                         myServer.subscribe(this);
+                        DataBase.addLog(login, "зашел в чат");
                         return;
                     } else {
                         sendMsg("Учетная запись уже используется");
+                        DataBase.addLog(login, "Учетная запись уже используется");
                     }
                 } else {
                     sendMsg("Неверные логин/пароль");
@@ -67,6 +72,7 @@ public class ClientHandler {
             String strFromClient = in.readUTF();
             System.out.println("от " + name + ": " + strFromClient);
             if (strFromClient.equals("/end")) {
+                DataBase.addLog(login, "вышел из чата");
                 return;
             }
             if (strFromClient.startsWith("/w ")) {

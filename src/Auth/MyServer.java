@@ -18,6 +18,7 @@ public class MyServer {
 
     public MyServer() {
         try (ServerSocket server = new ServerSocket(PORT)) {
+            DataBase.connect();
             authService = new BaseAuthService();
             authService.start();
             clients = new ArrayList<>();
@@ -33,6 +34,7 @@ public class MyServer {
             if (authService != null) {
                 authService.stop();
             }
+            DataBase.disconnect();
         }
     }
 

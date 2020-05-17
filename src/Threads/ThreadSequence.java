@@ -7,8 +7,7 @@ public class ThreadSequence implements Runnable {
     String letter;
     static final Object lock=new Object();
 
-    ThreadSequence(int order, String letter)
-    {
+    ThreadSequence(int order, String letter) {
         this.order=order;
         this.letter = letter;
     }

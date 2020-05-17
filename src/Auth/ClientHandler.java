@@ -1,8 +1,9 @@
 package Auth;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.*;
 import java.net.Socket;
 
 public class ClientHandler {
@@ -29,7 +30,8 @@ public class ClientHandler {
             new Thread(() -> {
                 try {
                     authentication();
-                    readMessages();
+                    readJson();
+                    //readMessages();
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
@@ -84,6 +86,20 @@ public class ClientHandler {
             }
 
             myServer.broadcastMsg(name + ": " + strFromClient);
+        }
+    }
+
+    public void readJson(){
+        while (true) {
+            BufferedReader inputJson = new BufferedReader(new InputStreamReader(in));
+            try {
+                JSONObject json = new JSONObject(inputJson.readLine());
+                System.out.println("Json: " + json);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

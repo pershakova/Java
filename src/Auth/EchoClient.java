@@ -1,12 +1,13 @@
 package Auth;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 
 public class EchoClient extends JFrame {
@@ -84,7 +85,8 @@ public class EchoClient extends JFrame {
     public void sendMessage() {
         if (!msgInputField.getText().trim().isEmpty()) {
             try {
-                out.writeUTF(msgInputField.getText());
+                sendJsonMessage();
+               // out.writeUTF(msgInputField.getText());
                 msgInputField.setText("");
                 msgInputField.grabFocus();
             } catch (IOException e) {
@@ -92,6 +94,19 @@ public class EchoClient extends JFrame {
                 JOptionPane.showMessageDialog(null, "Ошибка отправки сообщения");
             }
         }
+    }
+
+    public void sendJsonMessage() throws IOException {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("json", true);
+            jsonObject.put("message", msgInputField.getText());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        PrintWriter pw = new PrintWriter(out);
+        pw.println(jsonObject);
+        pw.flush();
     }
 
     public void authWindow(){
